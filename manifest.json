@@ -1,0 +1,38 @@
+{
+  "name": "Slate Buddy",
+  "description": "Enhance Slate CRM with visual tweaks and workflow improvements for a cleaner, more efficient interface.",
+  "version": "0.3.2",
+  "manifest_version": 3,
+  "icons": {
+    "128": "assets/slate_generic_favicon_128.png"
+  },
+  "permissions": [],
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.ohio.edu/manage*",
+        "https://*.test.technolutions.net/manage*"
+      ],
+      "js": ["src/app.js"],
+      "css": ["src/style.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["config/*", "assets/*", "src/*", "src/html/*"],
+
+      "matches": [
+        "https://admissions.ohio.edu/*",
+        "https://grad.ohio.edu/*",
+        "https://student.ohio.edu/*",
+        "https://enroll.ohio.edu/*",
+        "https://ohg.test.technolutions.net/*",
+        "https://ohi.test.technolutions.net/*",
+        "https://ohs.test.technolutions.net/*",
+        "https://oun.test.technolutions.net/*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+/* Overwriting some of the Slate CSS */
+.page-content {
+    width: auto !important;
+}
+
+/* Some updates to the report module */
+
+/* Add some borders around each portal row within the portal part */
+#report_rows > div {
+    border: 1px solid rgb(191, 194, 209) !important;
+    padding: 1px 3px;
+    border-radius: 3px;
+}
+
+/* .CodeMirror {
+    line-height: 1.2 !important;
+    height: 90vh !important;
+    width: 90vw !important;
+}
+
+.CodeMirror.cm-s-default.CodeMirror-wrap {
+    width: auto !important; 
+}
+
+.cke_87_uiElement {
+    width: 90vw !important;
+} */
+
+/* Overwriting the default pop-up width, it's too small for things like editing code/messages/etc */
+
+/* body > .dialog_host.ui-draggable {
+    left: calc(-850px + 50%) !important;
+} */
+
+/* #build_dialog {
+    width: fit-content !important;
+    margin: 0 50px !important;
+} */
+
+.dialog > form {
+    /* min-width: 1200px !important; */
+}
+
+/* body > .dialog_host.ui-draggable > .dialog.dialog_closeable > div {
+    width: 80vw !important;
+} */
+
+
+.sb-collapse-toggle-button {
+    border: 1px solid black;
+    padding: 0px 3px;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.search_group {
+    border-radius: 4px;
+    box-shadow: rgba(108, 163, 224, 0.29) 0px 0px 2px 3px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: rgb(232, 241, 246);
+}
+
+.search_header {
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.search_body {
+    background: #e8f1f6;
+    border: 5px solid #e8f1f6;
+    border-radius: 0px 0px 6px 6px;
+}
+
+.sb-header-collapsed {
+    background: #e8f1f6;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.sb-collapsed {
+    display: none;
+}
+
+.text-caution {
+    color: #ce7100;
+}
+
+.sb-text-error {
+    color: red;
+}
