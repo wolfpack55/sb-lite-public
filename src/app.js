@@ -7,6 +7,8 @@ const slate = {
 		abbreviation: "(GRAD) ",
 		domain: "grad.ohio.edu",
 		test_env: "ohg.test.technolutions.net",
+		banner_color: "#AA8A00",
+		banner_text_color: "#FFFFFF",
 		favicon: "gr_favi_v2.ico"
 	},
 
@@ -15,6 +17,8 @@ const slate = {
 		abbreviation: "(UG) ",
 		domain: "admissions.ohio.edu",
 		test_env: "ohi.test.technolutions.net",
+		banner_color: "#FA4616",
+		banner_text_color: "#FFFFFF",
 		favicon: "ug_favi_v2.ico"
 	},
 
@@ -23,7 +27,9 @@ const slate = {
 		abbreviation: "(EN) ",
 		domain: "enroll.ohio.edu",
 		test_env: "oun.test.technolutions.net",
-		favicon: "en_favi_v2.ico"
+		banner_color: "#A4D65E",
+		banner_text_color: "#000000",
+		favicon: "en_favi_v3.ico"
 	},
 
 	regional: {
@@ -38,83 +44,32 @@ const slate = {
 		abbreviation: "(CS) ",
 		domain: "student.ohio.edu",
 		test_env: "ohs.test.technolutions.net",
+		banner_color: "#00694E",
+		banner_text_color: "#FFFFFF",
 		favicon: "cs_favi_v2.ico"
 	}
 }
 
-function updatePageFavicons(isFeatureActive) {
-	if (!isFeatureActive) return;
+// Updated favicon function
+function updatePageFavicons(isFeatureActive, slateInstance) {
+    if (!isFeatureActive) return;
+    if (!slateInstance.favicon) return;
 
-	// Get the current domain 
-	const url = window.location.host;
-
-	// Grad Slate
-	if (url.includes(slate.grad.domain) || url.includes(slate.grad.test_env)) document.querySelector('link[rel~="icon"]').href = chrome.runtime.getURL(`assets/${slate.grad.favicon}`);
-
-	// Legacy UG Slate
-	if (url.includes(slate.ug.domain) || url.includes(slate.ug.test_env)) document.querySelector('link[rel~="icon"]').href = chrome.runtime.getURL(`assets/${slate.ug.favicon}`);
-
-	// New UG Slate
-	if (url.includes(slate.enroll.domain) || url.includes(slate.enroll.test_env)) document.querySelector('link[rel~="icon"]').href = chrome.runtime.getURL(`assets/${slate.enroll.favicon}`);
-
-	// Slate for Current Students
-	if (url.includes(slate.current.domain) || url.includes(slate.current.test_env)) document.querySelector('link[rel~="icon"]').href = chrome.runtime.getURL(`assets/${slate.current.favicon}`);
-
-	// Old RHE Slate Instance
-	if (url.includes(slate.regional.domain) || url.includes(slate.regional.test_env)) document.title = slate.regional.abbreviation + document.title;
-
-	// If it's a test environment, prepend 'TEST' to tab title
-	if (url.includes('test.technolutions.net')) document.title = '[TEST] ' + document.title;
+    const faviconLink = document.querySelector('link[rel~="icon"]');
+    if (faviconLink) {
+        faviconLink.href = chrome.runtime.getURL(`assets/${slateInstance.favicon}`);
+    }
 }
 
-function updateDatabaseBanner(isFeatureActive) {
-	if (!isFeatureActive) return;
+function updateDatabaseBanner(isFeatureActive, slateInstance) {
+    if (!isFeatureActive) return;
+    if (!slateInstance.banner_color) return;
 
-	// Get the current domain 
-	const url = window.location.host;
-
-	// Grad Slate
-	if (url.includes(slate.grad.domain) || url.includes(slate.grad.test_env)) {
-		// Find the header banner element
-		const headerBanner = document.querySelector('.header_banner');
-		if (headerBanner) {
-			headerBanner.style.background = '#8800ff';
-			headerBanner.style.color = '#ffffff';
-		}
-	}
-
-	// Legacy UG Slate
-	if (url.includes(slate.ug.domain) || url.includes(slate.ug.test_env)) {
-		// Find the header banner element
-		const headerBanner = document.querySelector('.header_banner');
-		if (headerBanner) {
-			headerBanner.style.background = '#024230';
-			headerBanner.style.color = '#ffffff';
-		}
-	} 
-
-	// New UG Slate
-	if (url.includes(slate.enroll.domain) || url.includes(slate.enroll.test_env)) {
-		// Find the header banner element
-		const headerBanner = document.querySelector('.header_banner');
-		if (headerBanner) {
-			headerBanner.style.background = '#55aa00';
-			headerBanner.style.color = '#ffffff';
-		}
-	}
-
-	// Slate for Current Students
-	if (url.includes(slate.current.domain) || url.includes(slate.current.test_env)) {
-		// Find the header banner element
-		const headerBanner = document.querySelector('.header_banner');
-		if (headerBanner) {
-			headerBanner.style.background = '#aa8b00';
-			headerBanner.style.color = '#ffffff';
-		}
-	} 
-
-	
-
+    const headerBanner = document.querySelector('.header_banner');
+    if (headerBanner) {
+        headerBanner.style.background = slateInstance.banner_color;
+        headerBanner.style.color = slateInstance.banner_text_color;
+    }
 }
 
 function collapsibleClicked(evt) {
@@ -158,12 +113,30 @@ function updateExportFilterUI(isFeatureActive) {
 
 // The main function that will setup all the available tools and features
 async function initSlateBuddy() {
-	
+
+	const url = window.location.host;
+
+    // Determine which slate instance matches the current URL
+    let slateInstance = null;
+    for (const key in slate) {
+        if (url.includes(slate[key].domain) || url.includes(slate[key].test_env)) {
+            slateInstance = slate[key];
+            break;
+        }
+    }
+
+    if (!slateInstance) return; // Not a Slate instance we care about
+
+    // If it's a test environment, prepend '[TEST]' to the tab title
+    if (url.includes('test.technolutions.net')) {
+        document.title = '[TEST] ' + document.title;
+    }
+
 	// Load custom favicons for each domain
-	updatePageFavicons(1);
+	updatePageFavicons(1, slateInstance);
 
 	// Change the database name banner's color
-	updateDatabaseBanner(1);
+	updateDatabaseBanner(1, slateInstance);
 
 
 	function mutationCallback(mutationList, observer) {
@@ -176,12 +149,6 @@ async function initSlateBuddy() {
 			observer.disconnect();
 			updateExportFilterUI(true);
 			observer.observe(targetNode, config);
-		}
-
-		// Check for if there is an action bar menu (like in a dialog box) visible with a 'Save' button
-		// If there is, add an eventListener so we can use Alt + Enter to save and close the dialog box
-		if (document.querySelector('body>div.dialog_host>div.dialog div.action button.default')) {
-			initDialogCloseHotkey(true);
 		}
 	}
 	// Setting up the mutationObserver to check for changes to the DOM, this is to check for when 
