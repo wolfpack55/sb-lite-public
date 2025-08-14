@@ -6,21 +6,24 @@ const slate = {
 		name: "Ohio University Graduate College",
 		abbreviation: "(GRAD) ",
 		domain: "grad.ohio.edu",
-		test_env: "ohg.test.technolutions.net"
+		test_env: "ohg.test.technolutions.net",
+		favicon: "gr_favi_v2.ico"
 	},
 
 	ug: {
 		name: "Ohio University",
 		abbreviation: "(UG) ",
 		domain: "admissions.ohio.edu",
-		test_env: "ohi.test.technolutions.net"
+		test_env: "ohi.test.technolutions.net",
+		favicon: "ug_favi_v2.ico"
 	},
 
 	enroll: {
 		name: "Ohio University",
 		abbreviation: "(EN) ",
 		domain: "enroll.ohio.edu",
-		test_env: "oun.test.technolutions.net"
+		test_env: "oun.test.technolutions.net",
+		favicon: "en_favi_v2.ico"
 	},
 
 	regional: {
@@ -34,7 +37,8 @@ const slate = {
 		name: "Ohio University Current Students",
 		abbreviation: "(CS) ",
 		domain: "student.ohio.edu",
-		test_env: "ohs.test.technolutions.net"
+		test_env: "ohs.test.technolutions.net",
+		favicon: "cs_favi_v2.ico"
 	}
 }
 
@@ -45,16 +49,16 @@ function updatePageFavicons(isFeatureActive) {
 	const url = window.location.host;
 
 	// Grad Slate
-	if (url.includes(slate.grad.domain) || url.includes(slate.grad.test_env)) document.querySelector('link[rel~="icon"]').href = chrome.runtime.getURL('assets/gr_favi.ico');
+	if (url.includes(slate.grad.domain) || url.includes(slate.grad.test_env)) document.querySelector('link[rel~="icon"]').href = chrome.runtime.getURL(`assets/${slate.grad.favicon}`);
 
 	// Legacy UG Slate
-	if (url.includes(slate.ug.domain) || url.includes(slate.ug.test_env)) document.querySelector('link[rel~="icon"]').href = chrome.runtime.getURL('assets/ug_favi.ico');
+	if (url.includes(slate.ug.domain) || url.includes(slate.ug.test_env)) document.querySelector('link[rel~="icon"]').href = chrome.runtime.getURL(`assets/${slate.ug.favicon}`);
 
 	// New UG Slate
-	if (url.includes(slate.enroll.domain) || url.includes(slate.enroll.test_env)) document.querySelector('link[rel~="icon"]').href = chrome.runtime.getURL('assets/new_ug_favi.ico');
+	if (url.includes(slate.enroll.domain) || url.includes(slate.enroll.test_env)) document.querySelector('link[rel~="icon"]').href = chrome.runtime.getURL(`assets/${slate.enroll.favicon}`);
 
 	// Slate for Current Students
-	if (url.includes(slate.current.domain) || url.includes(slate.current.test_env)) document.querySelector('link[rel~="icon"]').href = chrome.runtime.getURL('assets/cs_favi.ico');
+	if (url.includes(slate.current.domain) || url.includes(slate.current.test_env)) document.querySelector('link[rel~="icon"]').href = chrome.runtime.getURL(`assets/${slate.current.favicon}`);
 
 	// Old RHE Slate Instance
 	if (url.includes(slate.regional.domain) || url.includes(slate.regional.test_env)) document.title = slate.regional.abbreviation + document.title;
