@@ -1,7 +1,7 @@
 {
   "name": "Slate Buddy",
   "description": "Enhance Slate CRM with visual tweaks and workflow improvements for a cleaner, more efficient interface.",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "manifest_version": 3,
   "icons": {
     "128": "assets/slate_generic_favicon_128.png"

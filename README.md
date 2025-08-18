@@ -28,8 +28,10 @@ Collapsed Section:
 
 # Changelog
 
-### Version 0.3.2
+### Version 0.3.3
+- Changed Legacy UG instance color to be `#B5E3D8`
 
+### Version 0.3.2
 - Extension name simplified to just be "Slate Buddy"
 - Colors used for each instance changed to be:
   - `#A4D65E` for **enroll.ohio.edu**

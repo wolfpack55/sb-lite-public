@@ -17,9 +17,9 @@ const slate = {
 		abbreviation: "(UG) ",
 		domain: "admissions.ohio.edu",
 		test_env: "ohi.test.technolutions.net",
-		banner_color: "#FA4616",
-		banner_text_color: "#FFFFFF",
-		favicon: "ug_favi_v2.ico"
+		banner_color: "#b5e3d8ff",
+		banner_text_color: "#000000",
+		favicon: "ug_favi_v3.ico"
 	},
 
 	enroll: {
